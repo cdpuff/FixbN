@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name		Fix BanniNation
 // @description	fixes up various parts of the bn ui
-// @version		25.cp.11
+// @version		25.cp.12
 // @namespace	        http://www.bannination.com/fixbncp
 // @include		http://www.bannination.com/*
 // @include		http://bannination.com/*
@@ -120,6 +120,11 @@ try {
 						},
 						'showRepliesToMe': {
 							'label': "Show a List of Comments That Are Replies To Me",
+							'type': 'checkbox',
+							'default': false
+						},
+						'showRepliesToMeStartMinimized': {
+							'label': "Start Replies To Me notifier minimized",
 							'type': 'checkbox',
 							'default': false
 						},
@@ -935,7 +940,9 @@ try {
 						});
 						if (repliesToMeList.find("li").length > 0) {
 							repliesToMe.insertAfter($("div#main h1").first());
-							repliesToMeList.parent().hide();
+								if (GM_config.get("showRepliesToMeStartMinimized")) {
+									repliesToMeList.parent().hide();
+								}
 							repliesToMe.find("span.label").click(function () {
 								repliesToMeList.parent().toggle(250);
 							});
